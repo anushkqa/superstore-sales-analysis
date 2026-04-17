@@ -3,9 +3,14 @@ import plotly.express as px
 from analysis import load_data
 
 # Page config
-st.set_page_config(page_title="Superstore Dashboard", layout="wide")
+st.set_page_config(
+    page_title="Superstore Dashboard",
+    page_icon="📊",
+    layout="wide"
+)
 
 st.title("📊 Superstore Business Insights Dashboard")
+st.markdown("This dashboard provides insights into sales, profit, and product performance across different regions and categories.")
 
 # Load data
 data = load_data()
@@ -51,8 +56,8 @@ total_sales = filtered_data['Sales'].sum()
 total_profit = filtered_data['Profit'].sum()
 
 col1, col2 = st.columns(2)
-col1.metric("Total Sales", f"₹{total_sales:,.0f}")
-col2.metric("Total Profit", f"₹{total_profit:,.0f}")
+col1.metric("💰 Total Sales", f"₹{total_sales:,.0f}")
+col2.metric("📈 Total Profit", f"₹{total_profit:,.0f}")
 
 # =======================
 # 📈 Monthly Sales
@@ -154,3 +159,5 @@ st.download_button(
     file_name='filtered_data.csv',
     mime='text/csv'
 )
+st.markdown("---")
+st.markdown("Developed by Anushka Dwivedi 🚀")
