@@ -7,6 +7,7 @@ def load_data():
     data['Ship Date'] = pd.to_datetime(data['Ship Date'])
 
     data['Order Month'] = data['Order Date'].dt.month
+    data['Month Name'] = data['Order Date'].dt.strftime('%b')
     data['Order Year'] = data['Order Date'].dt.year
     
     return data

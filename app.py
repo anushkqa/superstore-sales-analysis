@@ -1,5 +1,6 @@
 import streamlit as st
 import plotly.express as px
+import pandas as pd
 from analysis import load_data
 
 # Page config
@@ -64,21 +65,41 @@ col2.metric("📈 Total Profit", f"₹{total_profit:,.0f}")
 # =======================
 st.subheader("Monthly Sales Analysis")
 
-sales = filtered_data.groupby('Order Month')['Sales'].sum().reset_index()
-sales = sales.sort_values(by='Order Month')  # FIX SORTING
+sales = filtered_data.groupby('Month Name')['Sales'].sum().reset_index()
 
-fig1 = px.line(sales, x='Order Month', y='Sales', markers=True)
+month_order = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+sales['Month Name'] = pd.Categorical(sales['Month Name'], categories=month_order, ordered=True)
+sales = sales.sort_values('Month Name')
+
+fig1 = px.line(
+    sales,
+    x='Month Name',
+    y='Sales',
+    markers=True,
+    title="Monthly Sales Trend"
+)
+
 st.plotly_chart(fig1, use_container_width=True)
+
 
 # =======================
 # 📉 Monthly Profit
 # =======================
 st.subheader("Monthly Profit Analysis")
 
-profit = filtered_data.groupby('Order Month')['Profit'].sum().reset_index()
-profit = profit.sort_values(by='Order Month')  # FIX SORTING
+profit = filtered_data.groupby('Month Name')['Profit'].sum().reset_index()
 
-fig2 = px.line(profit, x='Order Month', y='Profit', markers=True)
+profit['Month Name'] = pd.Categorical(profit['Month Name'], categories=month_order, ordered=True)
+profit = profit.sort_values('Month Name')
+
+fig2 = px.line(
+    profit,
+    x='Month Name',
+    y='Profit',
+    markers=True,
+    title="Monthly Profit Trend"
+)
+
 st.plotly_chart(fig2, use_container_width=True)
 
 # =======================
